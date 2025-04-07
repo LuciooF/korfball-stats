@@ -1,4 +1,4 @@
-import KorfballLogger from "./KorfballLogger";
+import KorfballLogger from "./components/korfball-logger";
 
 function App() {
   return (

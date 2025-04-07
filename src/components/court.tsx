@@ -1,5 +1,6 @@
 import React from "react";
 import { KorfballEvent } from "../types/events";
+import EventDot from "./event-dot";
 
 type Props = {
   events: KorfballEvent[];
@@ -9,32 +10,34 @@ type Props = {
 
 export default function Court({ events, onImageClick, pendingCoords }: Props) {
   return (
-    <div className="w-full flex justify-center mb-6">
-      <div className="relative w-[600px] h-auto">
-        <img
-          src="/korfball-court.png"
-          alt="Korfball Court"
-          onClick={onImageClick}
-          className="w-full h-auto border-4 border-blue-400 cursor-crosshair"
-        />
-        {pendingCoords && (
-          <div
-            className="absolute bg-red-600 rounded-full w-4 h-4 border border-white z-50"
-            style={{
-              left: pendingCoords.x - 8,
-              top: pendingCoords.y - 8,
-            }}
-          />
-        )}
-        {events.map((event) => (
-          <div
-            key={event.eventId}
-            className="absolute bg-green-500 rounded-full w-4 h-4 border border-white z-40 hover:z-50"
-            style={{ left: event.x - 8, top: event.y - 8 }}
-            title={`[${new Date(event.timestamp).toLocaleTimeString()}] ${event.eventType} ${"scorer" in event ? "by " + event.scorer : ""}`}
-          />
-        ))}
-      </div>
-    </div>
+    <div className="relative w-[600px] aspect-[2/3] bg-yellow-100 overflow-hidden">
+  <img
+    src="/korfball-court.png"
+    alt="Korfball Court"
+    onClick={onImageClick}
+    className="absolute inset-0 w-full h-full border-4 border-blue-400 cursor-crosshair"
+  />
+
+  {pendingCoords && (
+    <EventDot
+      x={pendingCoords.x}
+      y={pendingCoords.y}
+      color="red"
+      zIndex={50}
+      title="Pending"
+    />
+  )}
+
+  {events.map((event) => (
+    <EventDot
+      key={event.eventId}
+      x={event.x}
+      y={event.y}
+      color="green"
+      title={`[${new Date(event.timestamp).toLocaleTimeString()}] ${event.eventType}`}
+    />
+  ))}
+</div>
+
   );
 }

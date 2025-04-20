@@ -9,18 +9,15 @@ export default function KorfballLogger() {
   const [pendingCoords, setPendingCoords] = useState<{ x: number; y: number } | null>(null);
 
   const handleImageClick = (e: React.MouseEvent<HTMLImageElement>) => {
-    const img = e.currentTarget;
-    const rect = img.getBoundingClientRect();
-  
-    const scaleX = img.naturalWidth / rect.width;
-    const scaleY = img.naturalHeight / rect.height;
-  
-    const x = Math.round((e.clientX - rect.left) * scaleX);
-    const y = Math.round((e.clientY - rect.top) * scaleY);
-  
-    console.log("Clicked at:", x, y, "(scaled)");
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.round(e.clientX - rect.left);
+    const y = Math.round(e.clientY - rect.top);
+    console.log("Clicked at:", x, y);
     setPendingCoords({ x, y });
   };
+  
+  
+  
   
 
   return (
